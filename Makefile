@@ -6,7 +6,7 @@
 #    By: maiboyer <maiboyer@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/10 16:23:05 by maiboyer          #+#    #+#              #
-#    Updated: 2024/12/10 18:55:26 by maiboyer         ###   ########.fr        #
+#    Updated: 2024/12/10 18:59:29 by maiboyer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,3 +57,9 @@ subject: $(SUBJECT_FILE)
 
 $(SUBJECT_FILE):
 	@curl $(SUBJECT_URL) | pdftotext -layout -nopgbrk -q - $(SUBJECT_FILE)
+
+prune:
+	docker compose down
+	docker system prune
+	docker image prune
+	docker volume prune
