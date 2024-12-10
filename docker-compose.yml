@@ -7,6 +7,11 @@ services:
     env_file: ./secrets/wordpress.env
     networks:
       - inception-network
+    volumes:
+      - wordpress-vol:/var/www/html
+    depends_on:
+      - mariadb
+    restart: always
   
   mariadb:
     build: ./src/mariadb
@@ -16,6 +21,7 @@ services:
     env_file: ./secrets/mariadb.env
     networks:
       - inception-network
+    restart: always
 
   nginx:
     build: ./src/nginx
@@ -27,6 +33,9 @@ services:
       - '8080:443'
     networks:
       - inception-network
+    depends_on:
+      - wordpress
+    restart: always
 
 networks:
   inception-network:
@@ -40,4 +49,11 @@ volumes:
       o: 'bind'
       device: ${DATA_DIR:-/home/maiboyer/data}/wordpress
     name: "wordpress-volume"
+  mariadb-vol:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: ${DATA_DIR:-/home/maiboyer/data}/mariadb
+    name: "mariadb-volume"
 

@@ -6,7 +6,7 @@
 #    By: maiboyer <maiboyer@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/10 16:23:05 by maiboyer          #+#    #+#              #
-#    Updated: 2024/12/10 18:59:29 by maiboyer         ###   ########.fr        #
+#    Updated: 2024/12/10 23:04:47 by maiboyer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,13 +18,10 @@ SECRET_DIR = ./secrets
 # TODO: CHANGE ON FINISH
 DATA_DIR = /goinfre/maiboyer/inception
 # DATA_DIR = /home/maiboyer/data
-export DATA_DIR
+export DATA_DIR SECRET_DIR
 
 all: build
 	docker compose up -d
-
-$(SECRET_DIR):
-	@mkdir -p $(SECRET_DIR)
 
 #
 #$(SECRET_DIR)/%.env: $(SECRET_DIR)
@@ -36,8 +33,6 @@ $(SECRET_DIR):
 #
 #$(SECRET_DIR)/%.env: $(SECRET_DIR)
 #	curl https://maix.me/_inception/$(@:$(SECRET_DIR)%=%) -o $@
-
-
 
 re: ;
 	@$(MAKE) --no-print-directory clean
@@ -63,3 +58,20 @@ prune:
 	docker system prune
 	docker image prune
 	docker volume prune
+
+secret:
+	-rm -r $(SECRET_DIR)
+	cp -r ./secrets.template/ $(SECRET_DIR)
+	@./fill_secrets.sh mariadb   "DB_NAME"  "Database name"
+	@./fill_secrets.sh mariadb   "DB_USER"  "Database username"
+	@./fill_secrets.sh mariadb   "DB_PASS"  "Database password" fill_value
+	@./fill_secrets.sh wordpress "WP_URL"   "Wordpress url"
+	@./fill_secrets.sh wordpress "WP_TITLE" "Wordpress title"
+	@./fill_secrets.sh wordpress "WP_AUSER" "Wordpress admin username"
+	@./fill_secrets.sh wordpress "WP_APASS" "Wordpress admin password" fill_value
+	@./fill_secrets.sh wordpress "WP_AMAIL" "Wordpress admin email"
+	@./fill_secrets.sh wordpress "WP_USER"  "Wordpress normal username"
+	@./fill_secrets.sh wordpress "WP_PASS"  "Wordpress normal password" fill_value
+	@./fill_secrets.sh wordpress "WP_MAIL"  "Wordpress normal email"
+
+.PHONY: secrets
