@@ -6,7 +6,7 @@
 #    By: maiboyer <maiboyer@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/10 16:23:05 by maiboyer          #+#    #+#              #
-#    Updated: 2024/12/10 23:04:47 by maiboyer         ###   ########.fr        #
+#    Updated: 2024/12/10 23:18:09 by maiboyer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,34 +18,21 @@ SECRET_DIR = ./secrets
 # TODO: CHANGE ON FINISH
 DATA_DIR = /goinfre/maiboyer/inception
 # DATA_DIR = /home/maiboyer/data
-export DATA_DIR SECRET_DIR
 
 all: build
-	docker compose up -d
-
-#
-#$(SECRET_DIR)/%.env: $(SECRET_DIR)
-#	@echo "please create the secret manually. my workaround didn't pass the Froz test..."
-#	@echo "tried to create secret: $@"
-#	@exit 1
-# sadly they didn't think it was allowed :(
-#
-#
-#$(SECRET_DIR)/%.env: $(SECRET_DIR)
-#	curl https://maix.me/_inception/$(@:$(SECRET_DIR)%=%) -o $@
-
+	docker compose -f ./srcs/docker-compose.yml up -d 
 re: ;
-	@$(MAKE) --no-print-directory clean
+	@$(MAKE) --no-print-directory clean 
 	@$(MAKE) --no-print-directory all
 
 clean:
-	docker compose down
+	docker compose -f ./srcs/docker-compose.yml down
 
 stop: 
-	docker compose stop
+	docker compose -f ./srcs/docker-compose.yml stop
 
 build: $(SECRET_DIR)/wordpress.env $(SECRET_DIR)/nginx.env $(SECRET_DIR)/mariadb.env
-	docker compose build
+	docker compose -f ./srcs/docker-compose.yml build
 
 subject: $(SUBJECT_FILE)
 	@bat --plain ./.subject.txt
@@ -74,4 +61,7 @@ secret:
 	@./fill_secrets.sh wordpress "WP_PASS"  "Wordpress normal password" fill_value
 	@./fill_secrets.sh wordpress "WP_MAIL"  "Wordpress normal email"
 
-.PHONY: secrets
+.PHONY: secret
+
+# make it so the variable are passed down as env vars
+export DATA_DIR SECRET_DIR

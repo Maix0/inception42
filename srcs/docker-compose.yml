@@ -1,10 +1,12 @@
 services:
   wordpress:
-    build: ./src/wordpress
+    build: ./wordpress
     container_name: wordpress
     image: wordpress
     restart: always
-    env_file: ./secrets/wordpress.env
+    env_file: 
+      - ${SECRET_DIR}/wordpress.env
+      - ${SECRET_DIR}/mariadb.env
     networks:
       - inception-network
     volumes:
@@ -14,17 +16,18 @@ services:
     restart: always
   
   mariadb:
-    build: ./src/mariadb
+    build: ./mariadb
     container_name: mariadb
     image: mariadb
     restart: always
-    env_file: ./secrets/mariadb.env
+    env_file: 
+      - ${SECRET_DIR}/mariadb.env
     networks:
       - inception-network
     restart: always
 
   nginx:
-    build: ./src/nginx
+    build: ./nginx
     container_name: nginx
     image: nginx
     restart: always
