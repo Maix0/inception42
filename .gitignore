@@ -1,2 +1,5 @@
 /.subject.txt
 /secrets
+/flake.nix
+/flake.lock
+/.envrc
