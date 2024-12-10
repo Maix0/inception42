@@ -6,7 +6,7 @@
 #    By: maiboyer <maiboyer@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/10 16:23:05 by maiboyer          #+#    #+#              #
-#    Updated: 2024/12/10 18:34:41 by maiboyer         ###   ########.fr        #
+#    Updated: 2024/12/10 18:55:26 by maiboyer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,10 @@ SECRET_DIR = ./secrets
 # TODO: CHANGE ON FINISH
 DATA_DIR = /goinfre/maiboyer/inception
 # DATA_DIR = /home/maiboyer/data
+export DATA_DIR
 
 all: build
-	docker compose up
+	docker compose up -d
 
 $(SECRET_DIR):
 	@mkdir -p $(SECRET_DIR)

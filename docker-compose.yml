@@ -31,3 +31,13 @@ services:
 networks:
   inception-network:
     driver: bridge
+
+volumes:
+  wordpress-vol:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: ${DATA_DIR:-/home/maiboyer/data}/wordpress
+    name: "wordpress-volume"
+
