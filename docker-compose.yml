@@ -1,0 +1,33 @@
+services:
+  wordpress:
+    build: ./src/wordpress
+    container_name: wordpress
+    image: wordpress
+    restart: always
+    env_file: ./secrets/wordpress.env
+    networks:
+      - inception-network
+  
+  mariadb:
+    build: ./src/mariadb
+    container_name: mariadb
+    image: mariadb
+    restart: always
+    env_file: ./secrets/mariadb.env
+    networks:
+      - inception-network
+
+  nginx:
+    build: ./src/nginx
+    container_name: nginx
+    image: nginx
+    restart: always
+    ports:
+      # todo: change to port 443 on vm
+      - '8080:443'
+    networks:
+      - inception-network
+
+networks:
+  inception-network:
+    driver: bridge
