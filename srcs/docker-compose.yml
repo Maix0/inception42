@@ -5,6 +5,7 @@ services:
     image: wordpress
     restart: always
     env_file: 
+      - ${SECRET_DIR}/nginx.env
       - ${SECRET_DIR}/wordpress.env
       - ${SECRET_DIR}/mariadb.env
     networks:
@@ -24,6 +25,8 @@ services:
       - ${SECRET_DIR}/mariadb.env
     networks:
       - inception-network
+    volumes:
+      - mariadb-vol:/var/lib/mysql
     restart: always
 
   nginx:
@@ -31,13 +34,16 @@ services:
     container_name: nginx
     image: nginx
     restart: always
+    env_file: 
+      - ${SECRET_DIR}/nginx.env
     ports:
-      # todo: change to port 443 on vm
       - '8080:443'
     networks:
       - inception-network
     depends_on:
       - wordpress
+    volumes:
+      - wordpress-vol:/var/www/html
     restart: always
 
 networks:
