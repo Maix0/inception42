@@ -6,7 +6,7 @@
 #    By: maiboyer <maiboyer@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/10 16:23:05 by maiboyer          #+#    #+#              #
-#    Updated: 2024/12/11 22:23:42 by maiboyer         ###   ########.fr        #
+#    Updated: 2024/12/12 13:51:24 by maiboyer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,11 @@ DATA_DIR = /home/maiboyer/data
 
 endif
 
-all: build
+all: 
+	@$(MAKE) --no-print-directory build
+	@$(MAKE) --no-print-directory up
+	
+up:
 	docker compose -f ./srcs/docker-compose.yml up -d
 
 re:

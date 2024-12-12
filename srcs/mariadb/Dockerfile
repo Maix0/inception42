@@ -13,5 +13,5 @@ RUN chmod +x /bin/maria_conf;
 
 EXPOSE 3306
 
-CMD ["/bin/maria_conf", "su", "mysql", "-s", "/bin/sh", "-c", "mysqld"]
+CMD ["/bin/maria_conf", "mysqld"]
 

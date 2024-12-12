@@ -22,4 +22,4 @@ wait "$PID"
 sed -i /etc/my.cnf.d/mariadb-server.cnf -e 's/^port=3307$/\0\nbind-address = 0.0.0.0/'
 sed -i /etc/my.cnf.d/mariadb-server.cnf -e 's/^skip-networking$/;\0/'
 
-exec "$@"
+exec su mysql -s /bin/sh -c "$@"

@@ -28,11 +28,11 @@ RUN chmod +x /bin/wp-cli.phar;
 RUN ln -s /bin/wp-cli.phar /bin/wp;
 
 # Copy the .conf in the html directory
-COPY ./www.conf /etc/php/8.2/fpm/pool.d/
+COPY ./www.conf /etc/php82/php-fpm.conf
 COPY ./wp_conf.sh /bin/wp_conf
 RUN chmod +x /bin/wp_conf;
 
 #We expose the 9000 port
 EXPOSE 9000
 
-CMD ["/bin/wp_conf", "/usr/sbin/php-fpm82", "-F"]
+CMD ["/bin/wp_conf", "/usr/sbin/php-fpm82"]
