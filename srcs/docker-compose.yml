@@ -14,7 +14,6 @@ services:
       - wordpress-vol:/var/www/html
     depends_on:
       - mariadb
-    restart: always
   
   mariadb:
     build: ./mariadb
@@ -27,7 +26,6 @@ services:
       - inception-network
     volumes:
       - mariadb-vol:/var/lib/mysql
-    restart: always
 
   nginx:
     build: ./nginx
@@ -37,14 +35,64 @@ services:
     env_file: 
       - ${SECRET_DIR}/nginx.env
     ports:
-      - '8080:443'
+      - '443:443'
     networks:
       - inception-network
     depends_on:
       - wordpress
+      - site
+      - adminer
     volumes:
       - wordpress-vol:/var/www/html
+
+  redis:
+    build: ./bonus/redis
+    container_name: redis
+    image: redis
     restart: always
+    networks:
+      - inception-network
+    volumes:
+      - wordpress-vol:/var/www/html
+    depends_on:
+      - wordpress 
+
+  ftp:
+    build: ./bonus/ftp
+    container_name: ftp
+    image: ftp
+    restart: always
+    env_file: 
+      - ${SECRET_DIR}/ftp.env
+    networks:
+      - inception-network
+    volumes:
+      - wordpress-vol:/var/www/html
+    depends_on:
+      - wordpress
+    ports:
+      # server listening port
+      - '21:21'
+      # required for ftp use. Idk why. probably because it allocate a port per active user ?
+      - '21100-21110:21100-21110'
+
+  adminer:
+    build: ./bonus/adminer
+    container_name: adminer
+    image: adminer
+    restart: always
+    networks:
+      - inception-network
+    depends_on:
+      - mariadb
+  
+  site:
+    build: ./bonus/site/
+    container_name: site
+    image: site
+    restart: always
+    networks:
+      - inception-network
 
 networks:
   inception-network:

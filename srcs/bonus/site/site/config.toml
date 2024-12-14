@@ -1,0 +1,12 @@
+name = "This is my super blog site that isn't wordpress !?"
+
+[date]
+input = "%d/%m/%Y"
+output = "%d %B %Y"
+
+[rss]
+title = "hello"
+link = "file://output"
+description = """
+Please gimme the 125 I crave it :)
+"""

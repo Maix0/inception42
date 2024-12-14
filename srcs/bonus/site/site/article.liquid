@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+	<style>
+	html {
+		background-color: #1e1e1e;
+		color: #eeeeee;
+		font-family: sans-serif;
+	}
+
+	.title {
+		padding: 15px;
+		margin: 5px;
+		border-color: grey;
+		border-style: solid;
+		border-radius: 40px;
+		text-align: center;
+	}
+	.footer-inner {
+		padding: 15px;
+		border-color: orange;
+		border-style: solid;
+		border-radius: 40px;
+		text-align: center;
+		display: flex;
+		justify-content: center;
+	}
+	.footer {
+		padding: 0;
+		margin: 0;
+		position: absolute;
+		bottom: 0px;
+		left: 0px;
+		width: 100vw;
+	}
+	img {
+		width: 200px;
+	}
+	</style>
+	<head>
+		<title>{{ title }}</title>
+	</head>
+	<body>
+		<h1 class="title">{{ title }}</h1>
+		<h2>{{ date }}</h2>
+		{% for heading in headers %}
+            {% if heading.level < max_depth %}
+                <div>
+                    {{heading.number}} - <a href="#header-{{heading.number}}">{{ heading.text }}</a>
+                </div>
+            {% endif %}
+        {% endfor %}
+
+		{{ content }}
+		<div class="footer"> <div class="footer-inner"> hello yes this is website </div></div>
+	</body>
+</html>

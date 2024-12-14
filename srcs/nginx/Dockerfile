@@ -11,7 +11,6 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 	-keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt \
 	-subj "/C=FR/OU=student/CN=maiboyer.42.fr";
 
-RUN cat /etc/nginx/nginx.conf;
 COPY ./nginx.conf /etc/nginx/nginx.conf
 
 COPY ./launch.sh /bin/nginx-launch

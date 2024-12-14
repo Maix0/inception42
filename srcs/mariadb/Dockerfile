@@ -11,7 +11,5 @@ RUN chown mysql -R /run/mysqld;
 COPY ./maria_conf.sh /bin/maria_conf
 RUN chmod +x /bin/maria_conf;
 
-EXPOSE 3306
-
 CMD ["/bin/maria_conf", "mysqld"]
 

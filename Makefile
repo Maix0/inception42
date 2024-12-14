@@ -6,7 +6,7 @@
 #    By: maiboyer <maiboyer@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/10 16:23:05 by maiboyer          #+#    #+#              #
-#    Updated: 2024/12/12 13:51:24 by maiboyer         ###   ########.fr        #
+#    Updated: 2024/12/12 14:44:12 by maiboyer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,6 +81,8 @@ secret:
 	@./fill_secrets.sh wordpress "WP_PASS"  "Wordpress normal password" fill_value
 	@./fill_secrets.sh wordpress "WP_MAIL"  "Wordpress normal email"
 	@./fill_secrets.sh nginx     "DOMAIN"   "Domain Name"
+	@./fill_secrets.sh ftp       "FTP_USER" "FTP Username"
+	@./fill_secrets.sh nginx     "FTP_PASS" "FTP password" fill_value
 
 .PHONY: secret
 
