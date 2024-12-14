@@ -6,7 +6,7 @@
 #    By: maiboyer <maiboyer@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/10 16:23:05 by maiboyer          #+#    #+#              #
-#    Updated: 2024/12/12 14:44:12 by maiboyer         ###   ########.fr        #
+#    Updated: 2024/12/15 00:35:13 by maiboyer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ ifeq ($(shell hostname), XeLaptop)
 DATA_DIR = /tmp/inception_data
 
 endif 
-ifeq ($(shell hostname), InceptionLaptop)
+ifeq ($(shell hostname), nixos)
 	
 DATA_DIR = /home/maiboyer/data
 

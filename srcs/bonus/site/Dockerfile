@@ -1,5 +1,5 @@
 # as of writing latest is 3.21
-FROM alpine:3.20 as builder
+FROM alpine:3.20 AS builder
 
 RUN apk add cargo;
 RUN apk add wget;
