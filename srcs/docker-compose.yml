@@ -42,6 +42,7 @@ services:
       - wordpress
       - site
       - adminer
+      - netdata
     volumes:
       - wordpress-vol:/var/www/html
 
@@ -93,6 +94,27 @@ services:
     restart: always
     networks:
       - inception-network
+
+
+  netdata:
+    build: ./bonus/netdata/
+    container_name: netdata
+    image: netdata
+    restart: always
+    networks:
+      - inception-network
+    cap_add:
+      - SYS_PTRACE
+      - SYS_ADMIN
+    volumes:
+      - /:/host/root:ro,rslave
+      - /etc/passwd:/host/etc/passwd:ro
+      - /etc/group:/host/etc/group:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /etc/os-release:/host/etc/os-release:ro
+      - /var/log:/host/var/log:ro
 
 networks:
   inception-network:

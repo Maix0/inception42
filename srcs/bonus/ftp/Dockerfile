@@ -8,5 +8,6 @@ COPY ./vsftpd.conf /etc/vsftpd/vsftpd.conf.new
 COPY ./conf_ftp.sh /bin/conf_ftp
 RUN chmod +x /bin/conf_ftp
 
-CMD [ "/bin/conf_ftp", "/usr/sbin/vsftpd", "/etc/vsftpd/vsftpd.conf"]
+STOPSIGNAL SIGKILL
 
+CMD [ "/bin/conf_ftp", "/usr/sbin/vsftpd", "/etc/vsftpd/vsftpd.conf"]
