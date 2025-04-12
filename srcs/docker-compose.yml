@@ -5,9 +5,7 @@ services:
     image: wordpress
     restart: always
     env_file: 
-      - ${SECRET_DIR}/nginx.env
-      - ${SECRET_DIR}/wordpress.env
-      - ${SECRET_DIR}/mariadb.env
+      - ../.env
     networks:
       - inception-network
     volumes:
@@ -21,7 +19,7 @@ services:
     image: mariadb
     restart: always
     env_file: 
-      - ${SECRET_DIR}/mariadb.env
+      - ../.env
     networks:
       - inception-network
     volumes:
@@ -33,7 +31,7 @@ services:
     image: nginx
     restart: always
     env_file: 
-      - ${SECRET_DIR}/nginx.env
+      - ../.env
     ports:
       - '443:443'
     networks:
@@ -45,6 +43,8 @@ services:
       - netdata
     volumes:
       - wordpress-vol:/var/www/html
+
+# BEGIN BONUS STUFF HERE
 
   redis:
     build: ./bonus/redis
@@ -64,7 +64,7 @@ services:
     image: ftp
     restart: always
     env_file: 
-      - ${SECRET_DIR}/ftp.env
+      - ../.env
     networks:
       - inception-network
     volumes:
@@ -116,6 +116,8 @@ services:
       - /etc/os-release:/host/etc/os-release:ro
       - /var/log:/host/var/log:ro
 
+# END BONUS STUFF HERE
+
 networks:
   inception-network:
     driver: bridge
@@ -126,13 +128,13 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: ${DATA_DIR:-/home/maiboyer/data}/wordpress
+      device: ${DATA_DIR:-/home/${USER}/data}/wordpress
     name: "wordpress-volume"
   mariadb-vol:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: ${DATA_DIR:-/home/maiboyer/data}/mariadb
+      device: ${DATA_DIR:-/home/${USER}/data}/mariadb
     name: "mariadb-volume"
 

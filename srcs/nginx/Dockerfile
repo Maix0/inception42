@@ -1,7 +1,6 @@
 # as of writing latest is 3.21
 FROM alpine:3.20
-RUN apk add nginx;
-RUN apk add openssl;
+RUN apk add nginx openssl;
 RUN adduser -D -g 'www' www;
 RUN mkdir -p /var/lib/nginx;
 RUN rm -rf /var/www/html;

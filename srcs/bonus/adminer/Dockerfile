@@ -2,23 +2,10 @@
 FROM alpine:3.20
 
 # install tools
-RUN apk add wget;
-RUN apk add fcgi;
+RUN apk add wget fcgi;
 
 # install php stuff
-RUN apk add php82;
-RUN apk add php82-cgi;
-RUN apk add php82-ctype;
-RUN apk add php82-fpm;
-RUN apk add php82-gd;
-RUN apk add php82-iconv;
-RUN apk add php82-mbstring;
-RUN apk add php82-mysqli;
-RUN apk add php82-openssl;
-RUN apk add php82-phar;
-RUN apk add php82-redis;
-RUN apk add php82-tokenizer;
-RUN apk add mariadb-client;
+RUN apk add php82 php82-cgi php82-ctype php82-fpm php82-gd php82-iconv php82-mbstring php82-mysqli php82-openssl php82-phar php82-redis php82-tokenizer mariadb-client;
 
 COPY ./www.conf /etc/php82/php-fpm.conf
 

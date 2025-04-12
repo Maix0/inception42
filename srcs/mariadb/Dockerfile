@@ -2,8 +2,7 @@
 FROM alpine:3.20
 
 #installing mariadb and a client to configure stuff
-RUN apk add mariadb;
-RUN apk add mariadb-client;
+RUN apk add mariadb mariadb-client;
 
 RUN mkdir -p /var/lib/mysql;
 RUN mkdir -p /run/mysqld;

@@ -10,23 +10,20 @@
 #                                                                              #
 # **************************************************************************** #
 
-SUBJECT_FILE = ./.subject.txt
-SUBJECT_URL  = https://cdn.intra.42.fr/pdf/pdf/136429/en.subject.pdf
+# set this inside the wm
+DATA_DIR = /goinfre/$(USER)/inception
 
-
-SECRET_DIR = $(shell realpath ./secrets)
-
-
-DATA_DIR = /goinfre/maiboyer/inception
 # TODO: CHANGE ON FINISH
+# this is when on your home computer
 ifeq ($(shell hostname), XeLaptop)
 
 DATA_DIR = /tmp/inception_data
 
 endif 
+# change nixos to the name of the vm `hostname`
 ifeq ($(shell hostname), nixos)
 	
-DATA_DIR = /home/maiboyer/data
+DATA_DIR = /home/$(USER)/data
 
 endif
 
@@ -49,17 +46,11 @@ clean:
 stop:
 	docker compose -f ./srcs/docker-compose.yml stop
 
-build: $(SECRET_DIR)/wordpress.env $(SECRET_DIR)/nginx.env $(SECRET_DIR)/mariadb.env
+build: .env
 	mkdir -p $(DATA_DIR)
 	mkdir -p $(DATA_DIR)/wordpress
 	mkdir -p $(DATA_DIR)/mariadb
 	docker compose -f ./srcs/docker-compose.yml build
-
-subject: $(SUBJECT_FILE)
-	@bat --plain ./.subject.txt
-
-$(SUBJECT_FILE):
-	@curl $(SUBJECT_URL) | pdftotext -layout -nopgbrk -q - $(SUBJECT_FILE)
 
 prune:
 	docker compose -f ./srcs/docker-compose.yml down
@@ -67,24 +58,5 @@ prune:
 	docker image prune  -f -a
 	docker volume prune -f
 
-secret:
-	-rm -r $(SECRET_DIR)
-	cp -r ./secrets.template/ $(SECRET_DIR)
-	@./fill_secrets.sh mariadb   "DB_NAME"  "Database name"
-	@./fill_secrets.sh mariadb   "DB_USER"  "Database username"
-	@./fill_secrets.sh mariadb   "DB_PASS"  "Database password" fill_value
-	@./fill_secrets.sh wordpress "WP_TITLE" "Wordpress title"
-	@./fill_secrets.sh wordpress "WP_AUSER" "Wordpress admin username"
-	@./fill_secrets.sh wordpress "WP_APASS" "Wordpress admin password" fill_value
-	@./fill_secrets.sh wordpress "WP_AMAIL" "Wordpress admin email"
-	@./fill_secrets.sh wordpress "WP_USER"  "Wordpress normal username"
-	@./fill_secrets.sh wordpress "WP_PASS"  "Wordpress normal password" fill_value
-	@./fill_secrets.sh wordpress "WP_MAIL"  "Wordpress normal email"
-	@./fill_secrets.sh nginx     "DOMAIN"   "Domain Name"
-	@./fill_secrets.sh ftp       "FTP_USER" "FTP Username"
-	@./fill_secrets.sh nginx     "FTP_PASS" "FTP password" fill_value
-
-.PHONY: secret
-
 # make it so the variable are passed down as env vars
-export DATA_DIR SECRET_DIR
+export DATA_DIR

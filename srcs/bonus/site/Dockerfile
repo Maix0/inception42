@@ -1,8 +1,7 @@
 # as of writing latest is 3.21
 FROM alpine:3.20 AS builder
 
-RUN apk add wget;
-RUN apk add gcc;
+RUN apk add wget gcc;
 
 #RUN mkdir /ts-src;
 #RUN wget https://github.com/nvim-treesitter/nvim-treesitter/archive/33d27173876499a0f037cb9edff90d583711b6ae.tar.gz -O /tmp/archive-ts.tar.gz;
@@ -21,8 +20,7 @@ RUN /bin/verin build /site /build;
 
 FROM alpine:3.20
 
-RUN apk add nginx;
-RUN apk add openssl;
+RUN apk add nginx openssl;
 RUN adduser -D -g 'www' www;
 RUN mkdir -p /var/lib/nginx;
 RUN rm -rf /var/www/html;
